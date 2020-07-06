@@ -8,7 +8,7 @@ import Comment from './Comment';
 const CommentsForm = ({ tasks }) => {
     const activeTask = tasks.filter(task => task.active);
     console.log(activeTask[0]);
-    let showComments = activeTask[0].comments.length != 0;
+    let showComments = activeTask[0].comments.length !== 0;
 
     return (
       <div className="CommentsForm col-5">
@@ -19,7 +19,7 @@ const CommentsForm = ({ tasks }) => {
         <Form className="CommentsForm-form">
             <Form.Group controlId="formBasicEmail"> 
             <div className="commentColor"></div>           
-            <Form.Control type="text" placeholder="Type comment here..." />
+            <Form.Control value='salut' as="textarea" rows="2" placeholder="Type comment here..." />
             <Button variant="primary">Add New</Button> 
             </Form.Group>
         </Form>
