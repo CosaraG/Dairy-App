@@ -1,0 +1,29 @@
+@import '../../styles/reset';
+@import '../../styles/vars';
+
+.CommentsForm {
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.31); 
+    margin: 2em 0;
+    min-height: 5em;
+    padding: .5em;
+    background-color: $altGrey;
+    &-title {
+        font-size: $font-size-h1;
+        color: $text-color-menuRight;
+    }
+    &-form {
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            .commentColor {
+                height: 2em;
+                width: 2em;
+                background-color: black;
+            }
+            .form-control {
+                margin: 0 1em;
+                width: 60%;
+            }
+        }       
+    }
+}

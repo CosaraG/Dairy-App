@@ -1,0 +1,34 @@
+@import '../../styles/reset';
+@import '../../styles/vars';
+
+.App {
+  
+  display: flex;
+  
+    .menuLeft {
+      background-color: $background-color-leftMenu;
+      height: 100vh;
+      //width: 20%;
+      position: fixed;
+      &-title {
+        color: $text-color-main;
+        text-transform: uppercase;
+        font-size: $font-size-h1;
+        margin: .7em auto;
+        text-align: center;
+      }
+      &-comment {
+        color: $text-color-menuLeft;
+        text-align: center;
+      }
+    }
+
+    .menuRight {
+      padding: 1em 8em;
+      display: flex;
+      position: fixed;
+      margin-left: 20%;
+    }
+  
+}
+

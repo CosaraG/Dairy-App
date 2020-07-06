@@ -1,0 +1,19 @@
+@import '../../styles/reset';
+@import '../../styles/vars';
+
+.List {
+    .task {
+        border: 1px solid $lightgrey;
+        background-color: $white;
+        display: flex;
+        justify-content: space-between;
+        padding: .5em;
+        &-content {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-right: 1em;
+            line-height: 2em;
+        }
+    }
+}
