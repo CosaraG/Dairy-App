@@ -5,7 +5,7 @@ import './TodoForm.scss';
 
 import List from '../List/List';
 
-const TodoForm = () =>  {
+const TodoForm = ({ tasks }) =>  {
   return (
     <div className="TodoForm col-5">
 
@@ -16,7 +16,7 @@ const TodoForm = () =>  {
             <Button variant="info">Add New</Button> 
             </Form.Group>
         </Form>
-        <List />
+        <List tasks={tasks} />
     </div>
   );
 }

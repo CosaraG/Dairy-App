@@ -2,32 +2,34 @@ export default [
     {
       id: 1,
       title: 'Apprendre React',
-      done: false,
+      active: true,
+      comments: [
+        { 
+          id: 6,
+          text: 'jdgerkj',
+          color: 'green',
+        },
+        { 
+          id: 7,
+          text: 'fghvfgh',
+          color: 'black',
+        }
+      ],
       fav: true,
     },
     {
       id: 3,
       title: 'Apprendre plus de js',
-      done: true,
+      active: false,
+      comments: [],
       fav: false,
     },
     {
       id: 105,
       title: 'Ne pas apprendre Angular',
-      done: true,
+      active: false,
+      comments: [],
       fav: false,
-    },
-    {
-      id: 12,
-      title: 'Oublier PHP',
-      done: true,
-      fav: false,
-    },
-    {
-      id: 49,
-      title: 'Boire une bonne bière',
-      done: false,
-      fav: false,
-    },
+    },    
   ];
   

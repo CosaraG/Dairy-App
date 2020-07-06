@@ -16,4 +16,8 @@
             line-height: 2em;
         }
     }
+
+    .active {
+        border-left: 3px solid $pink;
+    }
 }
