@@ -1,4 +1,4 @@
 # Dairy-App
 
 
-![](./screenshot.jpg)
+![](./screenshot.JPG)
