@@ -11,8 +11,8 @@ const TodoForm = ({
     deleteTask, handleActiveTask,
 }) =>  {
     const handleChange = (event) => {
-        const { value } = event.target;
-        changeInputValue(value);
+        const { value, name } = event.target;
+        changeInputValue(value, name);
       };
 
     const handleSubmit = (event) => {
@@ -30,6 +30,7 @@ const TodoForm = ({
                 type="text"
                 placeholder="Type name here..."
                 value={todoFormInput}
+                name='todoFormInput'
                 onChange={handleChange}
             />
             <Button variant="info" onClick={handleSubmit}>Add New</Button> 

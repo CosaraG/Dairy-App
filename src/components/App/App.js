@@ -13,7 +13,7 @@ class App extends React.Component  {
   state = {
     tasks: initialTasks,
     todoFormInput: '',
-    commentsInput: 'hello',
+    commentsInput: '',
   }
   componentDidMount() {
     const userTasks = localStorage.getItem('userTasks');
@@ -24,9 +24,9 @@ class App extends React.Component  {
     }
   }
 
-  changeInputValue = (newInputValue) => {
+  changeInputValue = (value, name) => {
     this.setState({
-      todoFormInput: newInputValue,
+      [name]: value,
     });
   }
 
@@ -89,8 +89,40 @@ class App extends React.Component  {
     });
     this.setState({
       tasks: tasksModified,
+    });  
+  }
+
+  addComment = taskId => {
+    console.log(taskId);
+    const presentsTasks = this.state.tasks;
+    const { commentsInput } = this.state;
+
+    const newComment = {
+      id: nanoid(),
+      text: commentsInput,
+      color: 'black',      
+    };
+
+    const newCom = presentsTasks.filter(task=>taskId === task.id);
+
+
+    const updatedComment = [
+      ...newCom[0].comments,
+      newComment,
+    ];
+    
+    newCom[0].comments = updatedComment;
+
+    const updatedTasks = [
+      ...presentsTasks,
+      
+    ];
+    localStorage.setItem('userTasks', JSON.stringify(updatedTasks));   
+    this.setState({      
+      tasks: updatedTasks,  
+      commentsInput: '',    
+
     });
-  
   }
 
 
@@ -114,7 +146,9 @@ class App extends React.Component  {
             />
             <CommentsForm
               tasks={tasks}
-              commentsInput={commentsInput}              
+              commentsInput={commentsInput}
+              changeInputValue={this.changeInputValue}   
+              addComment={this.addComment}           
             />
           </div>
       </div>
