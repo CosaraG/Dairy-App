@@ -1,1 +1,3 @@
 # Dairy-App
+
+![](./screenshot.jpg)
