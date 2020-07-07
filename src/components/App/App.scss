@@ -1,14 +1,11 @@
 @import '../../styles/reset';
 @import '../../styles/vars';
 
-.App {
-  
-  display: flex;
-  
+.App {  
+  display: flex;  
     .menuLeft {
       background-color: $background-color-leftMenu;
       height: 100vh;
-      //width: 20%;
       position: fixed;
       &-title {
         color: $text-color-main;

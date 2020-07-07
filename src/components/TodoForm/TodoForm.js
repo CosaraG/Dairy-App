@@ -17,7 +17,9 @@ const TodoForm = ({
 
     const handleSubmit = (event) => {
       event.preventDefault();
+      if(todoFormInput != '') {
       addTask();
+    } 
     };
 
   return (
@@ -27,6 +29,7 @@ const TodoForm = ({
         <Form className="TodoForm-form" onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicEmail" >            
             <Form.Control
+                required
                 type="text"
                 placeholder="Type name here..."
                 value={todoFormInput}

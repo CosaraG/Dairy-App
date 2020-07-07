@@ -1,19 +1,20 @@
 import React from 'react';
-import { nanoid } from 'nanoid'
+import { nanoid } from 'nanoid';
+import { ChromePicker } from 'react-color';
 
 import './App.scss';
 
 import CommentsForm from '../CommentsForm/CommentsForm';
 import TodoForm from '../TodoForm/TodoForm';
 
-import initialTasks from '../../data/tasks';
-
 
 class App extends React.Component  {
   state = {
-    tasks: initialTasks,
+    tasks: [],
     todoFormInput: '',
     commentsInput: '',
+    background: 'black',
+    pickerActive: false,
   }
   componentDidMount() {
     const userTasks = localStorage.getItem('userTasks');
@@ -32,17 +33,25 @@ class App extends React.Component  {
 
   addTask = () => {
     const presentsTasks = this.state.tasks;
-    // je peux accéder au state donc à inputValue
     const { todoFormInput } = this.state;
+    let newTask = null;
 
-    const newTask = {
-      id: nanoid(),
-      title: todoFormInput,
-      active: false,
-      comments: [],
-    };
-
-    console.log(newTask.id);
+    if(presentsTasks.length === 0) {
+        newTask = {
+        id: nanoid(),
+        title: todoFormInput,
+        active: true,
+        comments: [],
+      };
+    } else {
+        newTask = {
+        id: nanoid(),
+        title: todoFormInput,
+        active: false,
+        comments: [],
+      };
+    }
+    
 
     const updatedTasks = [
       ...presentsTasks,
@@ -50,10 +59,10 @@ class App extends React.Component  {
     ];
     localStorage.setItem('userTasks', JSON.stringify(updatedTasks));
 
-    // on modifie le state via setState
     this.setState({
       tasks: updatedTasks,
       todoFormInput: '',
+      commentsInput: '',
     });
   }
 
@@ -61,7 +70,7 @@ class App extends React.Component  {
     const { tasks: presentsTasks } = this.state;
     const tasksWithoutDeleted = presentsTasks.filter(task => taskId !== task.id);
     const hasActiveTask = tasksWithoutDeleted.filter(task => task.active);
-    if(hasActiveTask.length === 0) {
+    if(hasActiveTask.length === 0 && tasksWithoutDeleted.length > 0) {
       tasksWithoutDeleted[tasksWithoutDeleted.length-1].active = true;
     };
     localStorage.setItem('userTasks', JSON.stringify(tasksWithoutDeleted));
@@ -93,14 +102,13 @@ class App extends React.Component  {
   }
 
   addComment = taskId => {
-    console.log(taskId);
     const presentsTasks = this.state.tasks;
     const { commentsInput } = this.state;
 
     const newComment = {
       id: nanoid(),
       text: commentsInput,
-      color: 'black',      
+      color: this.state.background,      
     };
 
     const newCom = presentsTasks.filter(task=>taskId === task.id);
@@ -120,20 +128,55 @@ class App extends React.Component  {
     localStorage.setItem('userTasks', JSON.stringify(updatedTasks));   
     this.setState({      
       tasks: updatedTasks,  
-      commentsInput: '',    
+      commentsInput: '',
+      background: 'black',
+    });
+    this.handleClose();
+  }
 
+  handleChangeComplete = (color) => {
+    this.setState({ background: color.hex });
+  };
+
+  colorPicker = () => {
+    this.setState({
+      pickerActive: !this.state.pickerActive
     });
   }
 
+  handleClose = () => {
+    this.setState({ pickerActive: false })
+  };
+
 
   render() { 
-    const { tasks, todoFormInput, commentsInput } = this.state;
+    const { tasks, todoFormInput, commentsInput, background } = this.state;
+
+    const popover = {
+      position: 'absolute',
+      zIndex: '2',
+    }
+    const cover = {
+      position: 'fixed',
+      top: '0px',
+      right: '0px',
+      bottom: '0px',
+      left: '0px',
+    }
 
     return (
       <div className="App">
           <div className="menuLeft col-2">
             <h1 className="menuLeft-title">Dairy App</h1>
             <div className="menuLeft-comment">Comment with no sense</div>
+            { this.state.pickerActive ? <div style={ popover }>
+              <div style={ cover } onClick={ this.handleClose }/>
+              <ChromePicker 
+                color={ this.state.background }
+                onChangeComplete={ this.handleChangeComplete }
+              />
+            </div> : null }
+            
           </div>
           <div className="menuRight col-10">
             <TodoForm 
@@ -148,7 +191,9 @@ class App extends React.Component  {
               tasks={tasks}
               commentsInput={commentsInput}
               changeInputValue={this.changeInputValue}   
-              addComment={this.addComment}           
+              addComment={this.addComment}
+              colorPicker={this.colorPicker} 
+              background={background}          
             />
           </div>
       </div>

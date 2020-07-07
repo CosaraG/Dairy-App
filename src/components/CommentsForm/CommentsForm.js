@@ -8,10 +8,11 @@ import Comment from './Comment';
 
 class CommentsForm extends React.Component {
   handleSubmit = () => {
-    const { tasks } = this.props;
-    const activeTask = tasks.filter(task => task.active);
-    console.log(activeTask[0].id);
-    this.props.addComment(activeTask[0].id);
+    const { tasks, addComment, commentsInput } = this.props;
+    if(tasks.length > 0 && commentsInput != '') {
+      const activeTask = tasks.filter(task => task.active);    
+      addComment(activeTask[0].id);
+    }
   }
 
   keydownHandler = (e) => {
@@ -25,27 +26,30 @@ class CommentsForm extends React.Component {
   }
 
     render () {
-      const { tasks, commentsInput, changeInputValue,  } = this.props;
+      const {
+        tasks, commentsInput, changeInputValue, colorPicker,
+        background,
+      } = this.props;
       const activeTask = tasks.filter(task => task.active);
     
-      let showComments = activeTask[0].comments.length !== 0;
+      let showComments = tasks.length>0 ? activeTask[0].comments.length !== 0 : null;
 
       const handleChange = (event) => {
         const { value, name } = event.target;
         changeInputValue(value, name);
       };
-    
-     
 
     return (
       <div className="CommentsForm col-5">
-        <div className="CommentsForm-title">Comments #{activeTask[0].id}</div>
-        {showComments && activeTask[0].comments.map(comment => (
+        <div className="CommentsForm-title">Comments #{tasks.length > 0 ? activeTask[0].id : ''}</div>
+        {showComments && tasks.length > 0 && activeTask[0].comments.map(comment => (
             <Comment key={comment.id} {...comment} />
         ))}
         <Form className="CommentsForm-form">
             <Form.Group controlId="formBasicEmail"> 
-            <div className="commentColor"></div>           
+            <div className="commentColor" onClick={colorPicker} style={{
+              backgroundColor: background
+            }}></div>           
             <Form.Control
               value={commentsInput}
               name='commentsInput'
